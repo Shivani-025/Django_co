@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container mt-5">
+  <form
+    class="col-6 mx-auto card p-3 shadow-lg"
+    action=""
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputname" class="form-label">Receipe Name</label>
+      <input name="receipe_name" required type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputdescription" class="form-label"
+        >Receipe Description</label
+      >
+      <textarea class="form-control" name="receipe_des" required></textarea>
+    </div>
+    <div class="mb-3 form-check">
+      <label for="exampleInputdescription" class="form-label"
+        >Receipe Image</label
+      >
+      <input name="receipe_img" type="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Add Receipe</button>
+  </form>
+
+  <div class="mt-5">
+    <div class="mx-auto col-6">
+      <form>
+        <div class="mb-3">
+          <label for="exampleInputdescription" class="form-label"
+            >Search Food</label
+          >
+          <input name="search" type="text" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <table class="table mt-5">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Receipe name</th>
+        <th scope="col">Receipe Description</th>
+        <th scope="col">Image</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for r in receipe %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{r.receipe_name}}</td>
+        <td>{{r.receipe_des}}</td>
+        <td>
+          <img src="/media/{{r.receipe_img}}" style="height: 100px" />
+        </td>
+        <td>
+          <a href="/{{r.id}}/" class="btn btn-danger">Delete</a>
+
+          <a href="/update_receipe/{{r.id}}/" class="btn btn-success mt-2"
+            >Update</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
